@@ -10,8 +10,15 @@ rooms = [
 
 
 def home(requset):
-    return render(requset, 'home.html', {'rooms': rooms})
+    context = {'rooms': rooms}
+    return render(requset, 'base/home.html', context)
 
 
-def room(requset):
-    return render(requset, 'room.html')
+def room(requset, pk):
+
+    room = None
+    for i in rooms:
+        if i['id'] == int(pk):
+            room = i
+    context = {'room': room}
+    return render(requset, 'base/room.html', context)
