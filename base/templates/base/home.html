@@ -8,8 +8,7 @@
 </head>
 
 <body>
-    {% extends 'main.html' %}
-    {% block content %}
+    {% extends 'main.html' %} {% block content %}
     <style>
         .home-container {
             display: grid;
@@ -20,7 +19,7 @@
     <div class="home-container">
         <div>
             <h3>Browse Topic</h3>
-            <hr>
+            <hr />
             <div>
                 <a href="{% url 'home' %}">All</a>
             </div>
@@ -31,7 +30,7 @@
             {% endfor %}
         </div>
         <div>
-
+            <h5>{{room_count}} rooms available</h5>
             <a href="{% url 'create-room' %}">Create Room </a>
             <div>
                 {% for room in rooms %}
@@ -39,16 +38,16 @@
                     <a href="{% url 'update-room'  room.id %}"> Eidt </a>
                     <a href="{% url 'delete-room'  room.id %}"> Delete </a>
                     <span>@{{room.host.username}}</span>
-                    <h5>{{room.id}} -- <a href="{% url 'room' room.id %}"> {{room.name}}</a></h5>
+                    <h5>
+                        {{room.id}} --
+                        <a href="{% url 'room' room.id %}"> {{room.name}}</a>
+                    </h5>
                     <small>{{room.topic.name}}</small>
-                    <hr>
+                    <hr />
                 </div>
+                {% endfor %}
             </div>
-
-
-            {% endfor %}
         </div>
-
     </div>
 
     {% endblock content %}
