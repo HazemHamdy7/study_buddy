@@ -1,24 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-</head>
+  <body>
+    {% extends 'main.html' %} {% block content %}
+    <style>
+      .room-container {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+      }
+    </style>
+    <div class="room-container">
+      <div>
+        <h1>{{room.name}}</h1>
 
-<body>
+        <p>{{room.description}}</p>
 
-  {% extends 'main.html' %}
+        <div class="comment-wrapper">
+          <h3>Conversation</h3>
 
+          <hr />
 
-  {% block content %}
+          {% for message in room_messages %}
 
-  <h1>{{room.name}}</h1>
+          <div>
+            <small>@{{message.user}} {{message.created|timesince}} age </small>
+            <p>{{message.body}}</p>
+            <hr />
+          </div>
+          {% endfor %}
+        </div>
 
-  {% endblock content %}
+        <!-- send message in Conversation -->
 
+        {% if request.user.is_authenticated %}
 
-</body>
+        <div class="comment-form">
+          <form method="POST" action="">
+            {% csrf_token %}
+            <input
+              type="text"
+              name="body"
+              placeholder="Write your message here ..."
+            />
+          </form>
+        </div>
+        {% endif %}
+      </div>
 
+      <!-- Participants section -->
+      <div>
+        <h3>Participants</h3>
+        <hr />
+      </div>
+    </div>
+
+    {% endblock content %}
+  </body>
 </html>
